@@ -1,6 +1,4 @@
 import _ from 'lodash';
-const inputEmailEl = document.querySelector('input');
-const inputMesageEl = document.querySelector('textarea');
 const formEl = document.querySelector('form');
 
 const currentData = { email: '', message: '' };
