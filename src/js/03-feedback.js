@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import throttle from 'lodash.throttle';
 const formEl = document.querySelector('form');
 
 const currentData = { email: '', message: '' };
@@ -19,14 +19,19 @@ function onChengeInput(evt) {
   throtSaveData(currentData);
 }
 
-const throtSaveData = _.throttle(function (currentData) {
+const throtSaveData = throttle(function (currentData) {
   localStorage.setItem('feedback-form-state', JSON.stringify(currentData));
 }, 500);
 
 function onSubmit(evt) {
   evt.preventDefault();
-
-  console.log(currentData);
-  evt.currentTarget.reset();
-  localStorage.removeItem('feedback-form-state');
+  if (evt.target.elements.email.value && evt.target.elements.message.value) {
+    console.log(currentData);
+    evt.currentTarget.reset();
+    localStorage.removeItem('feedback-form-state');
+    currentData.email = '';
+    currentData.message = '';
+    return;
+  }
+  alert('Необходимо заполнить все поля');
 }
